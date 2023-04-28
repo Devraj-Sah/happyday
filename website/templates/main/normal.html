@@ -1,0 +1,95 @@
+{% extends 'layout/master.html' %}
+{% load staticfiles %}
+{% block contents %}
+
+<div class="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-inner">
+            <ul class="list-inline list-unstyled">
+                <li><a href="/">Home</a></li>
+                <li><a href="#"> {% if blog_detail %}
+                    {{blog_detail.caption}}
+                {% else %}
+                    {{about.caption}}
+                {% endif %}</a></li>
+            </ul>
+        </div><!-- /.breadcrumb-inner -->
+    </div><!-- /.container -->
+</div><!-- /.breadcrumb -->
+
+
+<div class="hm_home_style1 hm_home_style3">
+    <!--menu start-->
+
+{% if blog_detail %}
+<!--blog section start-->
+<div class="hm_news_wrapper">
+    <div class="container">
+
+        <div class="hm_news_inner hm_blogs hm_single_blog">
+            <div class="hm_news_box">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <div class="hm_news_data">
+                            {% autoescape off %}
+                            <h1>{{blog_detail.title}}</h1><hr>
+                                {{blog_detail.main_title}}
+                                {{blog_detail.discription}}
+                            {% endautoescape %}
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="hm_news_img">
+                            <img src="{{blog_detail.banner_image.url}}" alt="" class="img-responsive">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% else %}
+        
+    <div class="body-content">
+        <div class="container">
+            <div class="checkout-boxx ">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="about-page-area">
+                                {{about.short_description|safe}}
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <br>
+                            <div class="about-page-img-area">
+                                <img src="{{about.banner_image1.url}}" alt="">
+
+                            </div>
+                        </div>
+                    </div>
+                </div> <br>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <br>
+                            <div class="about-page-img-area">
+                                <img src="{{about.banner_image2.url}}" alt="">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="about-page-area">
+                                {{about.long_contents|safe}}
+
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div><!-- /.row -->
+            </div><!-- /.checkout-box -->
+        </div><!-- /.container -->
+    </div>
+{% endif %}
+{% endblock %}
+

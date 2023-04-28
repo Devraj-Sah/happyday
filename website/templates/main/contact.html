@@ -1,0 +1,90 @@
+{% extends 'layout/master.html' %}
+{% load staticfiles %}
+{% block contents %}
+
+        <!--banner start-->
+        <div class="breadcrumb">
+            <div class="container">
+              <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                  <li><a href="index.html">Home</a></li>
+                  <li class='active'>Contact</li>
+                </ul>
+              </div><!-- /.breadcrumb-inner -->
+            </div><!-- /.container -->
+        </div><!-- /.breadcrumb -->
+        <div class="body-content">
+            <div class="container">
+              <div class="contact-page">
+                <div class="row">
+        
+                  <div class="col-md-12 contact-map outer-bottom-vs">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14123.251801249091!2d85.3594294!3d27.7539148!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1987e6d32d8d%3A0x18c8c3ec99b11971!2sMaxima%20International%20Trading%20Pvt.%20Ltd.%20(HIKVISION%20NEPAL)!5e0!3m2!1sne!2snp!4v1675938069007!5m2!1sne!2snp"
+                      width="250" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  </div>
+                    <div class="col-md-8 contact-form">
+                        <div class="col-md-12 contact-title">
+                        <h4>Contact Form</h4>
+                        </div>
+                        <form class="register-form" role="form" method="post" action="{% url 'Contactus' %}">
+                            {% csrf_token %}
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                <label class="info-title" for="exampleInputName">Your Name <span>*</span></label>
+                                <input type="text" name="name" class="form-control unicase-form-control text-input" id="exampleInputName"
+                                    placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
+                                <input type="email" name="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1"
+                                    placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                <label class="info-title" for="exampleInputTitle">Title <span>*</span></label>
+                                <input type="text" name="subject" class="form-control unicase-form-control text-input" id="exampleInputTitle"
+                                    placeholder="Title" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                <label class="info-title" for="exampleInputComments">Your Comments <span>*</span></label>
+                                <textarea name='message' class="form-control unicase-form-control" id="exampleInputComments" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 outer-bottom-small m-t-20">
+                                <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                  <div class="col-md-4 contact-info">
+                    <div class="contact-title">
+                      <h4>Information</h4>
+                    </div>
+                    <div class="clearfix address">
+                      <span class="contact-i"><i class="fa fa-map-marker"></i></span>
+                      <span class="contact-span">
+                        {{global_data.site_name}}</span>
+                    </div>
+                    <div class="clearfix phone-no">
+                      <span class="contact-i"><i class="fa fa-mobile"></i></span>
+                      <span class="contact-span">{{global_data.site_contact}}</span>
+                    </div>
+                    <div class="clearfix email">
+                      <span class="contact-i"><i class="fa fa-envelope"></i></span>
+                      <span class="contact-span"><a href="mailto:{{global_data.site_email}}">{{global_data.site_email}}</a></span>
+                    </div>
+                  </div>
+                </div><!-- /.contact-page -->
+              </div><!-- /.row -->
+              <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+        
+              <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+            </div>
+        
+         {% endblock %}

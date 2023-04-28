@@ -1,0 +1,61 @@
+{% load staticfiles %}
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">User Overview</h5>
+                <div class="table-responsive m-t-30">
+                    <table class="table product-overview">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>User_agent</th>
+                                <th>ip_address</th>
+                                <th>Username</th>
+                                <th>Attempt Time</th>
+                                <th>Failures Since Start</th>                                
+                                <!-- <th>Activity</th> -->
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <style>
+                                .sucessful-update{
+                                    background-color: #00c55899 !important;
+                                }
+                            </style>
+                            <tr {% if request.session.user_id == user.id %} class="sucessful-update" {% endif %}>
+                               <td>{{user.id}}</td>
+                               <td>{{user.user_agent}}</td>
+                               {% comment %} <td>    
+                                    {% if user.image %}                                               
+                                        <img src="{{user.image.url}}" class="" alt="{{user.image}}" width="80" height="50">
+                                    {% else %}
+                                        NotFound
+                                    {% endif %}
+                                </td>    {% endcomment %}
+                               <td>{{user.ip_address}}</td>
+                               <td>{{user.username}}</td>
+                               <td>{{user.attempt_time|date:'Y-m-d h:i:s'}}</td>
+                               <td>{{user.failures_since_start}}</td>
+                               {% comment %} <td><span class="label label-{% if user.is_active%}success{% else %}primary{% endif %}">{{user.is_active}}</span></td>
+                               <td><span class="label label-{% if user.role == 1 %}success{% else %}primary{% endif %}">{{user.getRoleName}}</span></td>
+                               <td><span class="label label-{% if user.groups.first ==  None %}primary{% else %}success{% endif %}">{{user.groups.all.first}}</span></td> {% endcomment %}
+                                <td>
+                                    {% comment %} <a href="{% url 'UserCreate' id=user.id %}" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="" data-original-title="Edit">
+                                        <i class="ti-marker-alt"></i>
+                                    </a>  {% endcomment %}
+                                    <a href="{% url 'LockedUserDelete' id=user.id %}" class="text-inverse" title="" data-bs-toggle="tooltip" data-original-title="Delete">
+                                        <i class="ti-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

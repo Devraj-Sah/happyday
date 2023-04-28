@@ -1,0 +1,466 @@
+{% extends 'layout/master.html' %}
+{% load staticfiles %}
+{% block contents %}
+{% load mathfilters %} 
+ <!--banner start-->
+ <div class="breadcrumb">
+    <div class="container">
+      <div class="breadcrumb-inner">
+        <ul class="list-inline list-unstyled">
+          <li><a href="/">Home</a></li>
+          <li class='active'>Shopping Cart</li>
+        </ul>
+      </div><!-- /.breadcrumb-inner -->
+    </div><!-- /.container -->
+  </div><!-- /.breadcrumb -->
+
+<!--cart section start-->
+
+{% comment %} <div class="container">
+    <div class="cart_all_pro">
+        <div class="px-4 px-lg-0">
+            <!-- For demo purpose -->
+
+
+            <div class="pb-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 p-5 bg-white rounded shadow-sm mb-5">
+
+                            <!-- Shopping cart table -->
+
+
+                            <!-- table head  -->
+
+                            <div class="table_head">
+                                <div class="conainer">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <h3>Product Name</h3>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <h3>Price</h3>
+
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h3>Quantity</h3>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <h3>Action</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- first -->
+                            <input type='hidden' id="count"  name="count" value="{{wishlist|length}}">
+                            {% for w in wishlist %}
+                                <!-- second -->
+                                <div class="individual_pro">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-2 col-sm-12">
+                                                <div class="pro_img">
+                                                    <img src="{{w.product.image1.url}}" alt="" width="70">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="pro_data">
+                                                    <h5> {{w.product.name}}</h5>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2 col-sm-12" >
+                                                <div class="pro_data" style="display:flex">
+                                                    <h5> $</h5> <h5 id="price{{forloop.counter}}" style="margin-left:-60px;"> {{w.product.price}}</h5>
+
+                                                </div >
+
+
+                                            </div>
+                                            <div class="col-md-2 col-sm-12">
+                                                <div class="pro_data">
+                                                    <h5 id="num{{forloop.counter}}">{{w.quantity}}</h5>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-2 col-sm-12">
+                                                <div class="pro_data">
+                                                    <h5>
+                                                        <a href="{% url 'WishListDelete' p_id=w.product.id pk=c_id next="cart" %}" style="color: #00a550;">remove</a>
+                                                    </h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+
+                            <!-- End -->
+                        </div>
+                        <div class="col-lg-4 p-5 bg-white rounded shadow-sm mb-5">
+
+                            <div class="order_price">
+                                <div class="summery_dev">
+                                    <h6>
+                                        Order summary
+                                        </h3>
+                                </div>
+                                <div class="p-4">                                    
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="d-flex justify-content-between py-3 border-bottom">
+                                            <strong class="text-muted">Order Subtotal
+                                            </strong><strong id="alltotal"></strong>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-3 border-bottom">
+                                            <strong class="text-muted">Shipping and
+                                                handling</strong><strong>$ (Will be sent in Mail)</strong>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-3 border-bottom">
+                                            <strong class="text-muted">Tax</strong><strong>$0.00</strong>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-3 border-bottom">
+                                            <strong class="text-muted">Total</strong>
+                                            <h5 class="font-weight-bold" id="alltotal1"></h5>
+                                        </li>
+                                    </ul>
+                                    <a href="{% url 'CheckOut'  %}">
+                                        <button>Procceed to Order</button>
+                                    </a>
+                                </div>
+                                <script>
+                                    var count = $('#count').val()                                    
+                                    var items = 0
+                                    var temp_items = 0
+                                    var total = 0
+                                    for (var i=1;i<=count;i++){
+                                        var name = '#num'+i
+                                        var price = '#price'+i
+                                        items += parseInt($(name).text())
+                                        temp_items = parseInt($(name).text())
+                                        price = parseInt($(price).text())
+                                        total += temp_items * price                           
+                                    }     
+                                    total = "$ "+total      
+                                    //$('#items').text(items)          
+                                    $('#alltotal').text(total)          
+                                    $('#alltotal1').text(total)          
+                                   
+                                </script>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> {% endcomment %}
+
+
+<div class="body-content outer-top-xs">
+    <div class="container">
+      <div class="row ">
+        <div class="shopping-cart">
+          <div class="shopping-cart-table ">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="cart-description item">Image</th>
+                    <th class="cart-product-name item">Product Name</th>
+                    <th class="cart-qty item">Quantity</th>
+                    <th class="cart-sub-total item">Price(Rs)</th>
+                    <th class="cart-total last-item">total</th>
+                    <th class="cart-romove item">Remove</th>
+                  </tr>
+                </thead><!-- /thead -->
+
+                <tbody>
+                    <input type='hidden' id="count"  name="count" value="{{wishlist|length}}">
+                    {% for w in wishlist %}
+
+                        <tr>
+                            <td class="cart-image">
+                            <a class="entry-thumbnail" href="/product-details/{{w.product.id}}">
+                                <img src="{{w.product.image1.url}}" alt="">
+                            </a>
+                            </td>
+                            <td class="cart-product-name-info">
+                            <h4 class='cart-product-description'><a href="/product-details/{{w.product.id}}">{{w.product.name}}</a></h4>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group rating-box" style="pointer-events:none;">
+                                        <div class="stars" style="gap:2px">
+                                          <i class="fa-solid fa-star {% if w.product.id|get_star >= 1 %} active {% endif %}" style="font-size:10px"></i>
+                                          <i class="fa-solid fa-star {% if w.product.id|get_star >= 2 %} active {% endif %}" style="font-size:10px"></i>
+                                          <i class="fa-solid fa-star {% if w.product.id|get_star >= 3 %} active {% endif %}" style="font-size:10px"></i>
+                                          <i class="fa-solid fa-star {% if w.product.id|get_star >= 4 %} active {% endif %}" style="font-size:10px"></i>
+                                          <i class="fa-solid fa-star {% if w.product.id|get_star == 5 %} active {% endif %}" style="font-size:10px"></i>
+                                        </div>
+                                      </div>
+                                </div>
+                                <div class="col-sm-12" style=" margin-top: -13px; ">
+                                <div class="reviews">
+                                    ({{ w.product.id|get_star_review}} Reviews)
+                                </div>
+                                </div>
+                            </div><!-- /.row -->
+                            {% comment %} <div class="cart-product-info">
+                                <span class="product-color">COLOR:<span>Blue</span></span>
+                            </div> {% endcomment %}
+                            </td>
+                            <td class="cart-product-quantity">
+                            <div class="quant-input">
+                                <div class="arrows">
+                                    <div class="arrow plus gradient ActionClick" data-post="num_{{forloop.counter}}" data-id="{{ w.id }}" id="plus{{forloop.counter}}">
+                                        <span class="ir ActionClickAsc"
+                                            ><i  class="icon fa fa-sort-asc"></i
+                                        ></span>
+                                    </div>
+                                    <div class="arrow minus gradient ActionClick" data-post="num_{{forloop.counter}}" data-id="{{ w.id }}" id="minus{{forloop.counter}}">
+                                        <span class="ir ActionClickDesc"
+                                            ><i  class="icon fa fa-sort-desc"></i
+                                        ></span>
+                                    </div>
+                                </div>
+                                <input class="ActionKeyUp" id="num{{forloop.counter}}" data-post="num_{{forloop.counter}}" name="quantity" data-id="{{ w.id }}" value="{{w.quantity}}" />
+                                </div>
+                                {% comment %} <input type='hidden'  name="number" id="number" value="1"> {% endcomment %}
+                            </td>
+                            <td class="cart-product-sub-total" style=""><span id="price{{forloop.counter}}" class="cart-sub-total-price">{{w.product.price}}</span></td>
+                            <td class="cart-product-grand-total"><span id="alltotal{{forloop.counter}}" class="cart-grand-total-price"></span></td>
+                            <td class="romove-item"><a href="{% url 'WishListDelete' p_id=w.product.id pk=c_id next="cart" %}" title="cancel" class="icon"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody><!-- /tbody -->
+              </table><!-- /table -->
+            </div>
+          </div><!-- /.shopping-cart-table -->
+
+          <div class="col-md-4 col-sm-12 cart-shopping-total">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>
+                    <div class="cart-sub-total">
+                      Quantity<span class="inner-left-md" id="items"></span>
+                    </div>
+                    <div class="cart-grand-total">
+                      Total<span class="inner-left-md" id="alltotal"></span>
+                    </div>
+                  </th>
+                </tr>
+              </thead><!-- /thead -->
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="cart-checkout-btn pull-right">
+                      <a href="{% url 'CheckOut'  %}">
+                      <button type="submit" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button>
+
+                      </a>
+                      <span class="">Checkout with multiples Products!</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody><!-- /tbody -->
+            </table><!-- /table -->
+          </div><!-- /.cart-shopping-total -->
+        </div><!-- /.shopping-cart -->
+      </div> <!-- /.row -->
+    </div><!-- /.container -->
+  </div><!-- /.body-content -->
+
+
+{% endblock %}
+
+
+{% block jscontents %}
+<script>
+
+    var count = $('#count').val()                                    
+    var items = 0
+    var temp_items = 0
+    var total = 0
+    var temp_total = 0
+    for (var i=1;i<=count;i++){
+        var name = '#num'+i
+        var price = '#price'+i
+        var show_total = '#alltotal'+i
+        items += parseInt($(name).val())
+        temp_items = parseInt($(name).val())
+        price = parseInt($(price).text())
+        total += temp_items * price                           
+        temp_total = temp_items * price                           
+        temp_total = "Rs."+temp_total      
+        $(show_total).text(temp_total) 
+    }  
+    total = "Rs."+total      
+    //$('#items').text(items)          
+    $('#alltotal').text(total)          
+    {% comment %} $('#alltotal1').text(total)  {% endcomment %}
+
+
+  $(document).ready(function(){
+
+    {% for j in wishlist %}
+    
+        var plus{{forloop.counter}} = '#plus'+{{forloop.counter}}
+        var minus{{forloop.counter}} = '#minus'+{{forloop.counter}}
+        var num{{forloop.counter}} = '#num'+{{forloop.counter}}
+
+
+    $(plus{{forloop.counter}}).click(function(){ 
+        var i = $(num{{forloop.counter}}).val()
+        var i = parseInt(i) + 1 ;
+        $(num{{forloop.counter}}).val(i)
+
+        var count = $('#count').val()                                    
+        var items = 0
+        var temp_items = 0
+        var total = 0
+        var temp_total = 0
+        for (var i=1;i<=count;i++){
+            var name = '#num'+i
+            var price = '#price'+i
+            var show_total = '#alltotal'+i
+            items += parseInt($(name).val())
+            temp_items = parseInt($(name).val())
+            price = parseInt($(price).text())
+            total += temp_items * price                           
+            temp_total = temp_items * price                           
+            temp_total = "Rs."+temp_total      
+            $(show_total).text(temp_total) 
+        }  
+        total = "Rs."+total      
+        //$('#items').text(items)          
+        $('#alltotal').text(total)          
+        {% comment %} $('#alltotal1').text(total)  {% endcomment %}
+
+
+    
+
+    });
+
+
+    $(num{{forloop.counter}}).keyup(function(){
+        var i = $(num{{forloop.counter}}).val()
+        var count = $('#count').val()                                    
+        var items = 0
+        var temp_items = 0
+        var total = 0
+        var temp_total = 0
+        for (var i=1;i<=count;i++){
+            var name = '#num'+i
+            var price = '#price'+i
+            var show_total = '#alltotal'+i
+            items += parseInt($(name).val())
+            temp_items = parseInt($(name).val())
+            price = parseInt($(price).text())
+            total += temp_items * price                           
+            temp_total = temp_items * price                           
+            temp_total = "Rs."+temp_total      
+            $(show_total).text(temp_total) 
+        }  
+        total = "Rs."+total      
+        $('#alltotal').text(total)          
+        {% comment %} $('#alltotal1').text(total)  {% endcomment %}
+    });
+
+    $(minus{{forloop.counter}}).click(function(){  
+        var i = $(num{{forloop.counter}}).val()
+        if (i != 1){
+        var i = parseInt(i) - 1 ;
+        $(num{{forloop.counter}}).val(i)
+        }
+
+        var count = $('#count').val()                                    
+        var items = 0
+        var temp_items = 0
+        var total = 0
+        var temp_total = 0
+        for (var i=1;i<=count;i++){
+            var name = '#num'+i
+            var price = '#price'+i
+            var show_total = '#alltotal'+i
+            items += parseInt($(name).val())
+            temp_items = parseInt($(name).val())
+            price = parseInt($(price).text())
+            total += temp_items * price                           
+            temp_total = temp_items * price                           
+            temp_total = "Rs."+temp_total      
+            $(show_total).text(temp_total) 
+        }  
+        total = "Rs."+total      
+        //$('#items').text(items)          
+        $('#alltotal').text(total)          
+        {% comment %} $('#alltotal1').text(total)  {% endcomment %}
+    
+
+    });
+
+    {% endfor %}
+
+    //$(".ActionKeyUp").keyup(function(){
+   // $(".ActionKeyUp").on('keyup click', function(){
+       // var id = $(this).attr("id");
+       // var split = id.split("_");
+       // quantity = $("#num_"+split[1]).val();
+       // price = $("#price_"+split[1]).val();
+       // $("#alltotal_"+split[1]).text(parseInt(quantity)*parseInt(price));
+       // alert(price_num);        
+    //});
+
+    function handleAction() {
+        //alert($(this).data('id'));
+        var id = $(this).data('id');
+        var post = $(this).data("post");
+        var split = post.split("_");
+        var quantity = $("#num"+split[1]).val();
+        //alert(quantity);
+        $.ajax({
+            url: '{% url "cartQuantityUpdate" %}',
+            type: 'GET',
+            data: {
+                'id': id,
+                'quantity': quantity
+            },
+            success: function(response) {
+                console.log(response)
+                if (response.success) {
+                    //var cell = $('button[data-id="' + obj_id + '"]').parent().prev('td');
+                    //cell.text(new_value);
+                    console.log(done);
+                }
+            }
+        });
+    }
+      
+    $(".ActionKeyUp").on('keyup', handleAction);
+    
+    $(".ActionClick").on('click', handleAction);
+    
+
+  });
+
+</script> 
+
+{% endblock %}

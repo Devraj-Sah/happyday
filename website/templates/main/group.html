@@ -1,0 +1,176 @@
+{% extends 'layout/master.html' %}
+{% load staticfiles %}
+{% block contents %}
+
+<div class="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-inner">
+            <ul class="list-inline list-unstyled">
+                <li><a href="/">Home</a></li>
+                <li><a href="#"> {% if blog_detail %}
+                    {{blog_detail.caption}}
+                {% else %}
+                    {{page_detail.caption}}
+                {% endif %}</a></li>
+            </ul>
+        </div><!-- /.breadcrumb-inner -->
+    </div><!-- /.container -->
+</div><!-- /.breadcrumb -->
+
+<!-- ................................partners......................... -->
+{% if about %}
+    <div class="container">
+        <div class="pt-main-area">
+            <h2>Partners Home</h2>
+            <div class="Partners-area">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <a href="#" class="nav-tabs-dropdown btn btn-block btn-primary">Tabs</a>
+                        <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
+                            {% for partners in page_detail.childs.all %}
+                                <li {% if forloop.counter == 1 %} class="active"{% endif %}><a href="#vtab{{forloop.counter}}" data-toggle="tab">{{partners.caption}}  </a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="tab-content tab-content-area">
+                            {% for partners in page_detail.childs.all %}
+                            <div role="tabpanel" class="tab-pane fade in active" id="vtab{{forloop.counter}}">
+                                <ul>
+                                    {% for options in partners.childs.all %}
+                                    <li><a href="/{{partners.name}}/{{options.name}}">{{options.caption}}</a></li>
+                                    {% endfor %}
+                                    {% comment %} <li><a href="partners-inner-page.html">Find A Distributor</a></li>
+                                    <li><a href="partners-inner-page.html">Disclaimer</a></li> {% endcomment %}
+                                </ul>
+                              
+                            </div>
+                            {% endfor %}
+                            {% comment %} <div role="tabpanel" class="tab-pane fade" id="vtab2">
+                                <ul>
+                                    <li><a href="partners-inner-page.html">Hik-partners pro</a></li>
+                                    <li><a href="partners-inner-page.html">Find A Distributor</a></li>
+                                    <li><a href="partners-inner-page.html">Disclaimer</a></li>
+                                    <li><a href="partners-inner-page.html">Disclaimer</a></li>
+                                    <li><a href="partners-inner-page.html">Disclaimer</a></li>
+                                    <li><a href="partners-inner-page.html">Disclaimer</a></li>
+                                    <li><a href="partners-inner-page.html">Disclaimer</a></li>
+                                </ul>
+                            </div> {% endcomment %}
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+        <div class="col-lg-10 col-md-10 col-sm-12">
+
+            <ul id="myTab" class="nav nav-tabs">
+                {% for partners in page_detail.childs.all %}
+                    <li class="do_it_again {% if forloop.counter == 1 %}active{% endif %}"><a href="#open{{forloop.counter}}" data-toggle="tab">{{partners.caption}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="wrap">
+                <div class="search">
+                    <input type="text" class="searchTerm" value="" placeholder=" Search in Partner List">
+                    <button type="submit" class="searchButton">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- <div class="pt-button">
+                <h5>Reset</h5>
+            </div> -->
+        </div>
+        <div id="myTabContent" class="tab-content tab-pt-sec">
+            {% for partners in page_detail.childs.all %}
+
+                    <div class="tab-pane fade {% if forloop.counter == 1 %}in active{% endif %}" id="open{{forloop.counter}}">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="span12">
+                                    <div id="tab" class="btn-group" data-toggle="buttons-radio">
+                                        {% for places in partners.childs.all %}
+                                            <a href="#places{{places.id}}" class="do_it_again btn {% if forloop.counter == 1 %}active{% endif %}" data-toggle="tab">{{places.caption}}</a>
+                                        {% endfor %}                                       
+                                    </div>
+
+                                    <div class="tab-content tab-pt-card">
+                                        {% for places in partners.childs.all %}
+                                            <div class="tab-pane active-card-check {% if forloop.counter == 1 %}active{% endif %}" id="places{{places.id}}">
+                                                {% for cards in places.childs.all %}
+                                                    <div class="col-12 custom-hide" id="card{{card.id}}">
+                                                        <div class="card mb-0 pt-img">
+                                                            <div class="row g-0">
+                                                                <div class="col-md-2">
+                                                                    <img src="{% if cards.banner_image1 %}{{cards.banner_image1.url}}{% endif %}" class="img-fluid rounded-start"
+                                                                        alt="...">
+                                                                </div>
+                                                                <div class="col-md-10">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title check-card-caption card{{card.id}}">{{cards.caption}}</h5>
+                                                                            {{cards.long_contents|safe}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        {% endfor %}
+                                        <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+                                        <script>
+                                            function hide_or_sick(){
+                                                var key = document.querySelector(".searchTerm").value;
+                                                var activeCard = document.querySelector(".active-card-check.active");
+                                                var activeCardId = activeCard.id;
+                                                var cardCaptions = activeCard.querySelectorAll(".check-card-caption");
+                                                cardCaptions.forEach((text) => {
+                                                    if (text.textContent.toLowerCase().indexOf(key.toLowerCase()) > -1) {
+                                                        activeCard.querySelectorAll(".custom-hide").forEach((elem) => {
+                                                          elem.style.display = "block";
+                                                        });
+                                                      } else {
+                                                        activeCard.querySelectorAll(".custom-hide").forEach((elem) => {
+                                                          elem.style.display = "none";
+                                                        });
+                                                      }
+                                                  });
+                                            }
+                                            $(".do_it_again").click(function(){
+                                                hide_or_sick();
+                                            });
+                                             $(".searchTerm").keyup(function(){
+                                                hide_or_sick();                                               
+                                             });
+                                        </script>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <!--accordion end-->
+                    </div>
+            
+            {%endfor%}
+        </div>
+    </div>
+
+    <!-- /.row -->
+
+</div>
+<!-- /.container-fluid -->
+<!-- ................................partners-tab-inner-end......................... -->
+</div>
+{% endif %}
+
+<!-- ................................partners......................... -->
+{% endblock %}
+

@@ -1,0 +1,141 @@
+{% extends 'layout/master.html' %}
+{% block contents %}
+
+
+    <!-- start register page -->
+
+
+        <div class=" registerPage">
+
+            <div class="registerFrom" style="width:60%;">
+            <form class="" method="post" name="" id="regform" action="{%url 'user_register'%}">
+                {% csrf_token %}
+                <h2 class="registerTitle">Royal Family Collection</h2>
+                <div class=" registerFormContainer">
+                    <h4>Create An Account</h4>
+                        <div class="row">
+                            
+                            <div class=" col-md-6 col-12" >
+                                <div class="inputBoxLogin">
+                                    <input label="First Name" name="first_name" type="text" placeholder="Full Name" required/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12" >
+
+                                <div class="inputBoxLogin">
+                                    <input label="Last Name" name="last_name" type="text" placeholder="User Name" required/>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                            <div class=" col-md-6 col-12" >
+                                <div class="inputBoxLogin">
+                                    <input label="Permant Address" name="permanent_address" type="text" placeholder="Permant Address" required/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12" >
+
+                                <div class="inputBoxLogin">
+                                    <input label="Current Address" name="current_address" type="text" placeholder="Current Address" required/>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                            <div class=" col-md-6 col-12" >
+                                <div class="inputBoxLogin">
+                                    <input label="Email" name="email" id="email" type="email" placeholder="a@gmail.com" required/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12" >
+
+                                <div class="inputBoxLogin">
+                                    <input label="Contact no." name="number" type="text"
+                                        placeholder="98********" required/>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class=" col-md-6 col-12" >
+                                <div class="inputBoxLogin">
+                                    <input label="Password" name="password" type="password"
+                                        placeholder="password" required/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12" >
+
+                                <div class="inputBoxLogin">
+                                    <input label="Confirm Password" name="cpassword" type="password"
+                                        placeholder="confirm password" required/>
+                                </div>
+
+                            </div>
+
+                        </div>          
+
+                        <div class="inputBoxLogin">
+                        
+                            <button id="regsubmit">Continue</button>
+                            {% comment %} <button id="regsubmit" type="submit">Continue</button> {% endcomment %}
+                        </div>
+                </div>
+                <p>
+                    Already have an account ?
+                    <a class="link" href="{%url 'user_login'%}">
+                    <span style="cursor:pointer ;" class="siginInBtn">LOG IN</span>
+                    </a>
+                </p>
+                <div class="terms">
+                    By creating an account, you agree to All In One's Conditions of
+                    Use and Privacy Notice.
+                </div>
+            </form>
+            </div>
+ 
+        </div>
+
+        <script>
+
+            document.getElementById("regform").addEventListener("click", function() {
+                var form = document.getElementById("regsubmit");
+                var requiredFields = form.querySelectorAll('[required]');
+            
+                // Check if all required fields have a value
+                for (var i = 0; i < requiredFields.length; i++) {
+                  if (requiredFields[i].value == '') {
+                    {% comment %} alert('Please fill in all required fields.'); {% endcomment %}
+                    requiredFields[i].focus();
+                    return false;
+                  }
+                }
+
+                const emailInput = document.getElementById('email');
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    emailInput.setCustomValidity('Please enter a valid email address.');
+                    return false;
+                  } else {
+                    emailInput.setCustomValidity('');
+                  }
+            
+                // If all required fields have a value, submit the form
+                form.submit();
+              });
+          </script>
+
+
+  
+{% endblock %}

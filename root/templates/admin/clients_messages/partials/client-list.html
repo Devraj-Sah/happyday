@@ -1,0 +1,52 @@
+{% load staticfiles %}
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Category Overview</h5>
+                <div class="table-responsive m-t-30">
+                    <table class="table product-overview">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Messages</th>
+                                <th>View</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        {% if client_msg %}
+                        <tbody>
+                            {% for i in client_msg %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.name}}</td>
+                                <td>{{i.email}}</td>
+                                <td>{{i.subject}}</td>
+                                <td>
+                                    {{i.message}}
+                                </td>
+                                <td>
+                                    
+                                    <a href="{% url 'ClientMessage' id=i.id %}" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="" data-original-title="Edit">
+                                        {% comment %} <i class="ti-marker-alt"></i> {% endcomment %}
+                                        <span class="badge bg-info">Open</span>
+                                    </a> 
+                                </td>
+                                <td>                                    
+                                    <a href="{% url 'DelMessage' id=i.id %}" class="text-inverse" title="" data-bs-toggle="tooltip" data-original-title="Delete">
+                                        <i class="ti-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

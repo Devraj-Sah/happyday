@@ -1,0 +1,147 @@
+{% extends 'layout/master.html' %}
+{% block contents %}
+    <!-- main top bar -->
+    <div class="breadcrumb">
+        <div class="container">
+          <div class="breadcrumb-inner">
+            <ul class="list-inline list-unstyled">
+              <li><a href="/">Home</a></li>
+              <li class='active'>Checkout</li>
+            </ul>
+          </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+      </div><!-- /.breadcrumb -->
+    
+    <!-- checkout box -->
+
+    {% comment %} <div class="container mt-5">
+        <div class="row">
+            <div class="shippingUserData">
+
+                <div class="shippingData">
+                    <h3> Address</h3>
+
+                    <span>Shipping address: Kathmandu</span>
+                    <br>
+                    <span>Billing address: Kathmandu Nepal</span>
+                    <br>
+
+                    <div class="selectOldBtn">
+                       <a href="#"> Select old address</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+
+
+    {% comment %} <div class=" checkoutPage">
+        <div class="container">
+            <div class="fluid">
+                <form class="checkoutFrom" method="post" action="{% url "CheckOut"%}" >
+                    <div class=" LoginFormContainer">
+                            {% csrf_token %}
+                            <div class="row">
+                                <h4>Shipping Address</h4>
+                                <div class="col-md-6">
+                                    <div class="inputBoxLogin">
+                                        <input label="Name" name="name" type="text" placeholder="Full Name *" required />
+                                    </div>
+
+                                    <div class="inputBoxLogin">
+                                        <input label="Phone" name="phone" type="number" placeholder="Phone * " required/>
+                                    </div>
+                                    <div class="inputBoxLogin">
+                                        <input label="shipping Address" name="address" type="text"
+                                            placeholder="Shipping address *" required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="inputBoxLogin">
+                                        <input label="Email" name="email" type="text" placeholder="Email" />
+                                    </div>
+
+                                    <div class="inputBoxLogin">
+                                        <input label="Billing Address" name="baddress" type="text"
+                                            placeholder=" Billing Address" />
+                                    </div>
+                                    <div class="inputBoxLogin">
+                                        <input label="Curent Address" name="caddress" type="text"
+                                            placeholder="Curent Address" />
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="checkoutButton">
+                                    <button type="submit">Continue</button>                              
+                            </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div> {% endcomment %}
+
+
+    <div class="container">
+        <div class="form-shopping" style="padding-top:0px">
+            <div class="apply-wrapper" >
+                <form class="checkoutFrom" style="box-shadow:none" method="post" action="{% url "CheckOut"%}" >
+                    {% csrf_token %}  
+                    <h3>To complete your checkout, please fill out the form accordingly</h3>                  
+                    <div class=" row">
+                        <div class="col-md-6 col-lg-6 col-12">
+                            <div class="form-1">
+                                <input type="name" value="{{request.user.username}}"  name="name"  class="form-control" id="inputName4" placeholder="Full Name *" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12">
+                            <div class="form-1">
+                                <input type="email" value="{{request.user.email}}" name="email" class="form-control" id="inputemail4" placeholder="Email *" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12">
+                            <div class="form-1">
+                                <input type="PhoneNumber" value="{{request.user.phone}}" name="phone" class="form-control" id="inputPhoneNumber4"
+                                    placeholder="Phone Number *" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12">
+                            <div class="form-1">
+                                <input type="Billing addres" value="{% if request.user.current_address %}{{request.user.current_address}}{% endif %}" name="baddress" class="form-control" id="inputemail4"
+                                    placeholder="Billing address" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12">
+                            <div class="form-1">
+                                <input type="Shipping Address" value="{% if request.user.current_address %}{{request.user.current_address}}{% endif %}"  name="address" class="form-control" id="Shipping Address"
+                                    placeholder="Shipping Address" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12">
+                            <div class="form-1">
+                                <input type="Current Address" value="{% if request.user.current_address %}{{request.user.current_address}}{% endif %}"  name="caddress"  class="form-control" id="inputName4"
+                                    placeholder="Current Address *" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="button-form">
+                        <button type="submit" class="btn ">Continue</button>
+                    </div> -->
+                    <div class="hm_btn_wrapper">
+                        <button  type="submit" class="hm_btn">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

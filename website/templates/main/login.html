@@ -1,0 +1,67 @@
+{% extends 'layout/master.html' %}
+{% block contents %}
+
+    <!-- main top bar -->
+    <div class="breadcrumb">
+      <div class="container">
+        <div class="breadcrumb-inner">
+          <ul class="list-inline list-unstyled">
+            <li><a href="/">Home</a></li>
+            <li class='active'>Login</li>
+          </ul>
+        </div><!-- /.breadcrumb-inner -->
+      </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+  
+  
+  
+    <!-- ............................login........................... -->
+  
+    <div class=" loginPage">
+      <form class="loginFrom" action="{% url 'user_login' %}" method="post" >
+        {% csrf_token %}
+          <h2 class="loginTitle">Maxima Collection</h2>
+          <div class=" LoginFormContainer">
+              <h4>Sign-In</h4>
+              <div class="inputBoxLogin">
+                  <input label="Email" name="email" type="text" placeholder="smc@gmail.com" />
+              </div>
+  
+              <div class="inputBoxLogin">
+                  <input label="Password" name="password" type="password"
+                      placeholder="password" />
+              </div>
+              <div class="inputBoxLogin">
+                
+                  <button type="submit">Continue</button>
+              </div>
+          </div>
+          <p>
+              Don't have an account ?
+              <a class="link" href="{% url "user_register" %}">
+              <span style="cursor: pointer;">SIGN UP</span>
+              </a>
+          </p>
+          <div class="terms">
+              By creating an account, you agree to Maxima Collection's Conditions of
+              Use and Privacy Notice.
+          </div>
+          <div class="loginWithGoogle">
+              <p class="googleIconItem text-center">
+                  <i class="fa-brands fa-google"></i>
+                  <span onClick={loginGoogle}>Login with Google</span>
+              </p>
+          </div>
+      </form>
+  </div>
+ 
+
+
+ 
+
+
+{% endblock %}
+
+
+
+
