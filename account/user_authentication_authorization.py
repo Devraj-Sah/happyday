@@ -136,7 +136,7 @@ def UserCreate(request,id=None):
 @customized_user_passes_test(is_admin_role)
 def UserStore(request,id=None):
 
-    if CustomUser.objects.filter(email=request.POST['email']).exists():
+    if CustomUser.objects.filter(email=request.POST['email']).count() > 1:
         messages.info(request, "email_already_exists")
         return redirect(request.POST['next'])
 
@@ -188,7 +188,10 @@ def UserStore(request,id=None):
         #     user.division_forest_email = division_forest_email
         #     user.save()
         request.session['user_id'] = user.id
-        messages.info(request, 'User inserted Successfully !!!')
+        if id:
+            messages.info(request, 'User Updated Successfully !!!')
+        else:
+            messages.info(request, 'User inserted Successfully !!!')
         return redirect(UserList)
 
 

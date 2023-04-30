@@ -52,7 +52,7 @@
                                         <i class="ti-trash" style="font-size:18px"></i>
                                     </a>
                                 </td>
-                                {% if i.page_type == 'group' or i.page_type == 'sale_group' %}
+                                {% if i.page_type == 'group' or i.page_type == 'sale_group' or i.page_type == 'contact' %}
                                 <td>
                                     <a href="{% url 'NavigationList' id=i.id %}"><img src="{% static '/assets/icons/folder.jpg' %}" class="" alt="{{i.name}}" width="80" height="50">
                                 </td>
